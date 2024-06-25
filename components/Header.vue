@@ -1,5 +1,5 @@
 ﻿<template>
-	<header class="sticky top-0 z-10 bg-white dark:bg-gray-900">
+	<header class="sticky top-0 z-10">
 		<nav class="container mx-auto">
 			<div
 				class="relative flex flex-wrap items-center justify-between p-4 mx-auto"

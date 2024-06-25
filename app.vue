@@ -1,7 +1,7 @@
 <template>
 	<div :class="{ dark: isDark }">
 		<Header @toggle-theme="toggleTheme" />
-		<NuxtWelcome />
+		<Resume />
 	</div>
 </template>
 

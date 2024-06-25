@@ -11,6 +11,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			spacing: {
+				indent: '0.5rem', // Adjust to match a two-space indent
+			},
 			colors: {
 				light: {
 					bg: '#ffffff',
@@ -18,7 +21,7 @@ module.exports = {
 					primary: '#4a5568',
 				},
 				dark: {
-					bg: '#1a202c',
+					bg: 'rgb(17, 24, 39)',
 					text: '#e2e8f0',
 					primary: '#a0aec0',
 				},
