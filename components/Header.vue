@@ -1,5 +1,12 @@
 ﻿<template>
 	<header class="sticky top-0 z-10">
+		<button
+			@click="skipToContent"
+			class="sr-only skip-to-content focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:bg-black focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:z-50"
+		>
+			Skip to main content
+		</button>
+
 		<nav class="container mx-auto">
 			<div
 				class="relative flex flex-wrap items-center justify-between p-4 mx-auto"
@@ -40,12 +47,12 @@
 				</button>
 				<div
 					:class="[
-						'absolute top-full left-0 lg:relative items-center justify-between font-medium w-full lg:flex lg:w-auto lg:order-1',
+						'absolute top-full left-0 lg:relative items-center justify-between font-medium w-full lg:flex lg:w-auto lg:order-1 bg-gray-300 rounded-b-lg lg:rounded-lg dark:bg-gray-800 lg:bg-transparent lg:dark:bg-transparent border border-gray-800 lg:border-0 dark:border-gray-700',
 						{ hidden: !menuOpen },
 					]"
 				>
 					<ul
-						class="left-0 flex flex-col p-4 border border-gray-100 rounded-b-lg lg:items-center lg:p-0 lg:rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700"
+						class="left-0 flex flex-col p-4 lg:items-center lg:p-0 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 dark:border-gray-700"
 					>
 						<li>
 							<NuxtLink
@@ -58,7 +65,7 @@
 						</li>
 						<li>
 							<button
-								class="flex items-center justify-between w-full px-3 py-2 text-gray-900 rounded lg:w-auto hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 lg:dark:hover:bg-transparent dark:border-gray-700"
+								class="flex items-center justify-between w-full px-3 py-2 text-gray-900 rounded-t-lg lg:w-auto hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 lg:dark:hover:bg-transparent dark:border-gray-700"
 								@click="toggleMegaMenu"
 							>
 								Company
@@ -89,7 +96,7 @@
 								<div
 									v-if="megaMenuOpen"
 									ref="dropdownRef"
-									class="left-0 z-20 w-full rounded-lg lg:absolute lg:mt-4 bg-gray-50 dark:bg-gray-800 lg:shadow-lg"
+									class="left-0 z-20 w-full bg-gray-100 rounded-b-lg lg:border lg:rounded-lg lg:absolute lg:mt-4 dark:bg-gray-700 lg:shadow-lg lg:border-slate-800 lg:dark:border-slate-200"
 								>
 									<div
 										class="grid max-w-screen-xl pl-4 pr-4 mx-auto text-gray-900 lg:p-4 dark:text-white sm:grid-cols-2 lg:px-6"
@@ -220,11 +227,11 @@
 									class="inline-block w-6 h-6 p-1 transition duration-200 ease-in-out transform rounded-full"
 									:class="
 										isDark
-											? 'translate-x-6 bg-white text-gray-50'
-											: 'translate-x-1 bg-gray-900 color-zinc-900'
+											? 'translate-x-1 bg-gray-900 color-zinc-900'
+											: 'translate-x-6 bg-white text-gray-5'
 									"
 								>
-									<template v-if="isDark">
+									<template v-if="!isDark">
 										<SunIcon class="w-full h-full text-black" />
 									</template>
 									<template v-else>
@@ -243,6 +250,8 @@
 <script setup>
 	import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
 	import { inject, onBeforeUnmount, onMounted, ref } from 'vue';
+
+	// Existing code...
 
 	const sticky = ref(false);
 	const menuOpen = ref(false);
@@ -263,6 +272,7 @@
 		if (event) event.stopPropagation();
 		megaMenuOpen.value = !megaMenuOpen.value;
 	};
+
 	let clickOutsideListener;
 	function handleClickOutside(event) {
 		if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
@@ -271,6 +281,15 @@
 			}, 200);
 		}
 	}
+
+	const skipToContent = () => {
+		const content = document.getElementById('content');
+		if (content) {
+			content.setAttribute('tabindex', '-1'); // Make it focusable
+			content.focus();
+			content.removeAttribute('tabindex'); // Remove the attribute after focusing
+		}
+	};
 
 	onMounted(() => {
 		window.addEventListener('scroll', handleScroll);
