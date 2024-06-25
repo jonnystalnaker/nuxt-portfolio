@@ -1,0 +1,16 @@
+﻿:root {
+	--bg-color: theme('colors.light.bg');
+	--text-color: theme('colors.light.text');
+	--primary-color: theme('colors.light.primary');
+}
+
+.dark {
+	--bg-color: theme('colors.dark.bg');
+	--text-color: theme('colors.dark.text');
+	--primary-color: theme('colors.dark.primary');
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+}
